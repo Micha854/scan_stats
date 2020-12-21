@@ -17,8 +17,9 @@ token       = '940537113:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 chat_id     = '@group_name'   # @username or id
 
 # Discord
-discord     = False
-webhook     = "https://discord.com/api/webhooks/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+discord     = True
+d_token     = 'NzkwMjEyNTM3NzQ4MTYwNTUy.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+d_channel   = 786657783185879044   # discord channel id
 
 # Display Options
 option_raids   = True
@@ -36,7 +37,7 @@ detail_other   = False
 
 area_exclude   = ['hidden_area_1', 'hidden_area_2']   # these areas are hidden
 
-update_message = True
+update_message = True   # if false, editing will only take place if changes are detected, with true specification of the sleeptime
 pinned_message = True   # only Telegram
 
 ########################################################
