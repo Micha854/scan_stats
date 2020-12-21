@@ -215,11 +215,12 @@ async def my_background_task():
 
         if config.update_message == True:
             message+= "\n\u23F1 last update: <code>" + datetime.datetime.now().strftime('%d.%m.%y %H:%M:%S') + "</code>\n"
+            stand = None
         else:
             stand = "\n\u23F1 <code>Stand: " + datetime.datetime.now().strftime('%d.%m.%y %H:%M:%S') + "</code>\n"
 
         if not message == old_message:
-            send_message = message+stand if stand else message
+            send_message = message+stand if not stand == None else message
             
             # discord
             if config.discord == True:
