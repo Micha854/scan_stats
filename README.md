@@ -1,5 +1,3 @@
-# ivScript
-
 ### this script shares statistics about your MAD scanner with your community
 
 ## Config
