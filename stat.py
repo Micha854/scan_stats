@@ -18,7 +18,7 @@ async def my_background_task():
 
     # load telegram overview_id
     try:
-        f = open("output.txt", "r")
+        f = open("telegram.txt", "r")
         overview_id = f.read()
         f.close()
     except:
@@ -105,11 +105,11 @@ async def my_background_task():
         # fetch all individual areas
         e=0
         indi_area = {}
-        for devices in area_id:
-            indi_area[area[e]] = {"type": mode[e], "all": 0, "aktiv": 0, "result": 0}
+        for x in area:
+            indi_area[x] = {"type": mode[e], "all": 0, "aktiv": 0, "result": 0}
             e+=1
 
-        for devices in area_id:
+        for x in area:
             last = datetime.datetime("1970-01-01 00:00:00").timestamp if proto[n] == None else datetime.datetime.strptime(str(proto[n]), '%Y-%m-%d %H:%M:%S').timestamp()
             now  = time.time()
             diff = now - last
@@ -250,10 +250,10 @@ async def my_background_task():
                         if config.telegram == True:
                             #unpinned = requests.get('https://api.telegram.org/bot' + token + '/unpinChatMessage?chat_id=' + str(chat_id) + '&message_id=' + str(overview_id))
                             bot.delete_message(config.chat_id,overview_id)
-                            overview_id = bot.send_message(config.chat_id,send_message+stand,parse_mode='HTML')
+                            overview_id = bot.send_message(config.chat_id,send_message,parse_mode='HTML')
                             overview_id = overview_id.message_id
 
-                            f = open("output.txt", "w")
+                            f = open("telegram.txt", "w")
                             f.writelines(str(overview_id))
                             f.close()
 
@@ -264,10 +264,10 @@ async def my_background_task():
                     except:
                         try:
                             if config.telegram == True:
-                                overview_id = bot.send_message(config.chat_id,send_message+stand,parse_mode='HTML')
+                                overview_id = bot.send_message(config.chat_id,send_message,parse_mode='HTML')
                                 overview_id = overview_id.message_id
 
-                                f = open("output.txt", "w")
+                                f = open("telegram.txt", "w")
                                 f.writelines(str(overview_id))
                                 f.close()
 
