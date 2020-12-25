@@ -197,7 +197,11 @@ while 1 == 1:
     if config.option_other == True and config.detail_other == True and indi_count_other > 1: message+= indi_other
     if other and config.detail_other == True: message += "\n"
 
-    message+= "\n\u23F1 last update: <code>" + datetime.datetime.now().strftime('%d.%m.%y %H:%M:%S') + "</code>\n" if config.update_message == True else ""
+    if config.update_message == True:
+        message+= "\n\u23F1 last update: <code>" + datetime.datetime.now().strftime('%d.%m.%y %H:%M:%S') + "</code>\n"
+        stand = None
+    else:
+        stand = "\n\u23F1 <code>Stand: " + datetime.datetime.now().strftime('%d.%m.%y %H:%M:%S') + "</code>\n"
 
     # discord
     if config.discord == True:
@@ -208,9 +212,11 @@ while 1 == 1:
         }
 
     if not message == old_message and (config.telegram or config.discord):
+        send_message = message+stand if not stand == None else message
+
         try:
             if config.telegram == True:
-                bot.edit_message_text(message,chat_id=config.chat_id, message_id=overview_id, parse_mode='HTML',disable_web_page_preview=True)
+                bot.edit_message_text(send_message,chat_id=config.chat_id, message_id=overview_id, parse_mode='HTML',disable_web_page_preview=True)
                 old_message = message
                 print(" SUCCESS: Nachricht wurde bearbeitet")
             if config.discord == True: result = requests.post(config.webhook, json=data)
@@ -219,7 +225,7 @@ while 1 == 1:
                 if config.telegram == True:
                     #unpinned = requests.get('https://api.telegram.org/bot' + token + '/unpinChatMessage?chat_id=' + str(chat_id) + '&message_id=' + str(overview_id))
                     bot.delete_message(config.chat_id,overview_id)
-                    overview_id = bot.send_message(config.chat_id,message,parse_mode='HTML')
+                    overview_id = bot.send_message(config.chat_id,send_message,parse_mode='HTML')
                     overview_id = overview_id.message_id
 
                     f = open("output.txt", "w")
@@ -235,7 +241,7 @@ while 1 == 1:
             except:
                 try:
                     if config.telegram == True:
-                        overview_id = bot.send_message(config.chat_id,message,parse_mode='HTML')
+                        overview_id = bot.send_message(config.chat_id,send_message,parse_mode='HTML')
                         overview_id = overview_id.message_id
 
                         f = open("output.txt", "w")
